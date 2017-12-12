@@ -1,0 +1,20 @@
+<form [formGroup]="noteForm">
+  <div class="form-group">
+    <label for="title">Titre</label>
+    <input type="text" class="form-control" id="title" placeholder="Entrez un titre" formControlName="title">
+  </div>
+  Titre : {{title.value}}
+  <div class="form-group">
+    <label class="form-check-label">
+      <input class="form-check-input" type="radio" value="date" checked formControlName="type"> 
+      Date de fin
+    </label>
+    <label class="form-check-label">
+      <input class="form-check-input" type="radio" value="duree" checked formControlName="type"> 
+      Durée
+    </label>
+  </div>
+  Selected : {{type.value}}
+
+
+</form>

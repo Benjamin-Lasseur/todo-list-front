@@ -1,0 +1,3 @@
+<ul class="list-group">
+  <li *ngFor="let note of notesNonDonetab" class="list-group-item">{{note.title}}<span class="badge badge-default badge-pill">{{joursRestants(note.dateFin)}}</span></li>
+</ul>

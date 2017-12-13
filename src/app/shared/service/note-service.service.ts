@@ -5,6 +5,7 @@ import { Note } from '../domain/note';
 import { environment } from '../../../environments/environment'
 import { HttpHeaders } from '@angular/common/http';
 import { Subject } from 'rxjs/Subject';
+import DateUtil from '../util/date-util'
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -13,21 +14,29 @@ const httpOptions = {
 @Injectable()
 export class NoteServiceService {
 
-  private notesTabObs = new Subject<Note[]>()
-  private notesTab: Note[] = []
+  constructor(public http: HttpClient, public dateUtil: DateUtil) {
+    this.http.get<Note[]>(`${environment.url}/notes`)
+      .subscribe(notes => {
+        notes.forEach(note => {
+          this.notesTab.push(this.dateUtil.convertDateStringToJSON(note, ["dateFin", "dateDebut"]))
+        })
+        this.notesSubject.next(this.notesTab)
+      })
+  }
 
-  constructor(public http: HttpClient) { this.updateNotesNonDone()}
+  notesSubject: Subject<Note[]> = new Subject()
+  notesTab: Note[] = []
 
   listerNotesNonDone(): Observable<Note[]> {
-    return this.notesTabObs.asObservable();
+    return this.notesSubject.asObservable()
   }
 
-  enregistrer(note: Note) {
-    console.log("Entrée dans post NoteService")
-    this.http.post<Note>(`${environment.url}/notes`, note, httpOptions).subscribe(data => { this.notesTab.push(data); this.notesTabObs.next(this.notesTab) })
+  enregistrer(note: Note): void {
+    this.http.post<Note>(`${environment.url}/notes`, note, httpOptions)
+      .subscribe(note => {
+        this.notesTab.push(this.dateUtil.convertDateStringToJSON(note, ["dateFin", "dateDebut"]));
+        this.notesSubject.next(this.notesTab)
+      })
   }
 
-  updateNotesNonDone(): void {
-    this.http.get<Note[]>(`${environment.url}/notes`).subscribe(data => { this.notesTab = data; this.notesTabObs.next(this.notesTab) })
-  }
 }

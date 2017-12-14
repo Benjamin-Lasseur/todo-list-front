@@ -38,8 +38,8 @@
             <input type="text" class="form-control" id="nbDuree" placeholder="Nombre de " formControlName="nbDuree">
           </div>
           <div class="col-lg-4">
-            <select class="form-control" id="typeDeDuree" formControlName="duree">
-              <option *ngFor="let typeDuree of dureeTab">{{typeDuree}}</option>
+            <select [compareWith]="byKey" class="form-control" id="typeDeDuree" formControlName="duree">
+              <option *ngFor="let typeDuree of actionsDuree" [ngValue]="typeDuree.action">{{typeDuree.key}}</option>
             </select>
           </div>
         </div>

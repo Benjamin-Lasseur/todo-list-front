@@ -18,24 +18,28 @@ export class ListNotesComponent implements OnInit {
 
   constructor(public noteService: NoteServiceService) { }
 
+  done(note): void {
+    this.noteService.noteDone(note);
+  }
+
   ngOnInit() {
     this.notesObs = this.noteService.listerNotesNonDone()
     this.notesObs.subscribe(notes => this.notesNonDonetab = notes.sort(this.compare))
   }
 
   joursRestants(dateFin: Date): string {
-    let nbJours:number = Math.round((dateFin.getTime() - new Date().getTime()) / (60 * 60 * 24 * 1000))
-    if(nbJours<0){
-      return "En retard de "+(nbJours*-1)+" jours!"
+    let nbJours: number = Math.round((dateFin.getTime() - new Date().getTime()) / (60 * 60 * 24 * 1000))
+    if (nbJours < 0) {
+      return "En retard de " + (nbJours * -1) + " jours!"
     }
-    if(nbJours==0){
+    if (nbJours == 0) {
       return "A faire aujourd'hui!"
     }
-    if(nbJours<30){
-      return nbJours+" jours restant!"
+    if (nbJours < 30) {
+      return nbJours + " jours restant!"
     }
-    if(nbJours>30){
-      return Math.round(nbJours/30)+" mois restant!"
+    if (nbJours > 30) {
+      return Math.round(nbJours / 30) + " mois restant!"
     }
     return null
   }

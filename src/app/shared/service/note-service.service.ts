@@ -39,4 +39,14 @@ export class NoteServiceService {
       })
   }
 
+  noteDone(note: Note): void {
+    this.http.put<Note[]>(`${environment.url}/notes`, note, httpOptions).subscribe(notes => {
+      this.notesTab = []
+      notes.forEach(note => {
+        this.notesTab.push(this.dateUtil.convertDateStringToJSON(note, ["dateFin", "dateDebut"]))
+      })
+      this.notesSubject.next(this.notesTab)
+    })
+  }
+
 }

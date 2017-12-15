@@ -1,5 +1,5 @@
 <ul class="list-group">
-  <li *ngFor="let note of notesNonDonetab" class="list-group-item">{{note.title}}
+  <li *ngFor="let note of notesNonDonetab" [class]="applyCategorieStyle(note.categorie.id)">{{note.title}}
     <span class="badge badge-success" (click)="done(note)">
       <span class="glyphicon glyphicon-ok"></span>
     </span>

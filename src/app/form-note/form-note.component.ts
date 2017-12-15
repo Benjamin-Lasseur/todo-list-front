@@ -3,6 +3,8 @@ import { FormControl, FormGroup } from '@angular/forms'
 import { FormBuilder } from '@angular/forms';
 import { Note } from '../shared/domain/note';
 import { NoteServiceService } from '../shared/service/note-service.service';
+import { Categorie } from '../shared/domain/categorie';
+import { CategorieService } from '../shared/service/categorie.service';
 
 
 
@@ -13,6 +15,8 @@ import { NoteServiceService } from '../shared/service/note-service.service';
   styleUrls: ['./form-note.component.css']
 })
 export class FormNoteComponent implements OnInit {
+
+  public categories: Categorie[]
 
   actionsDuree: any = [
     {
@@ -51,13 +55,15 @@ export class FormNoteComponent implements OnInit {
 
   public noteForm: FormGroup
 
-  constructor(private fb: FormBuilder, private noteService: NoteServiceService) { }
+  constructor(private fb: FormBuilder, private noteService: NoteServiceService, private categorieService: CategorieService) { }
 
   ngOnInit() {
+    this.categorieService.listerCategories().subscribe(categories => { this.categories = categories })
     this.noteForm = this.fb.group({
       title: '',
       type: 'date',
       description: '',
+      categorie: '',
       dateFin: new Date(),
       duree: {
         value: this.actionsDuree[0].action, disabled: true
@@ -91,13 +97,15 @@ export class FormNoteComponent implements OnInit {
   enregistrer(): void {
     let newNote: Note
     if (this.type.value == "date") {
-      newNote = new Note(0, this.title.value, this.description.value, null, this.dateFin.value, false)
+      newNote = new Note(0, this.title.value, this.description.value, null, this.dateFin.value, false, this.categorie.value)
       this.noteService.enregistrer(newNote);
     } else if (this.type.value == "duree") {
-      newNote = new Note(0, this.title.value, this.description.value, null, this.duree.value(), false)
+      newNote = new Note(0, this.title.value, this.description.value, null, this.duree.value(), false, this.categorie.value)
       this.noteService.enregistrer(newNote);
     }
   }
+
+  
 
   get title() { return this.noteForm.get('title') }
   get type() { return this.noteForm.get('type') }
@@ -105,4 +113,5 @@ export class FormNoteComponent implements OnInit {
   get dateFin() { return this.noteForm.get('dateFin') }
   get duree() { return this.noteForm.get('duree') }
   get nbDuree() { return this.noteForm.get('nbDuree') }
+  get categorie() { return this.noteForm.get('categorie') }
 }

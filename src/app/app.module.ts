@@ -13,6 +13,7 @@ import { AppComponent } from './app.component';
 import { FormNoteComponent } from './form-note/form-note.component';
 import { NoteServiceService } from './shared/service/note-service.service';
 import { ListNotesComponent } from './list-notes/list-notes.component';
+import { CategorieService } from './shared/service/categorie.service';
 
 
 @NgModule({
@@ -28,7 +29,7 @@ import { ListNotesComponent } from './list-notes/list-notes.component';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [NoteServiceService, DateUtil],
+  providers: [NoteServiceService, DateUtil, CategorieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

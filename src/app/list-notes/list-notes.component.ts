@@ -22,6 +22,23 @@ export class ListNotesComponent implements OnInit {
     this.noteService.noteDone(note);
   }
 
+  applyCategorieStyle(id: number): string {
+    let style: string = "list-group-item"
+    if (this.styleCategorie.find(obj => obj.categorieId == id) != null) {
+      style = this.styleCategorie.find(obj => obj.categorieId == id).style
+    }
+    return style
+  }
+
+  styleCategorie: any[] = [{
+    categorieId: 1,
+    style: "list-group-item list-group-item-info"
+  },
+  {
+    categorieId: 2,
+    style: "list-group-item list-group-item-danger"
+  }]
+
   ngOnInit() {
     this.notesObs = this.noteService.listerNotesNonDone()
     this.notesObs.subscribe(notes => this.notesNonDonetab = notes.sort(this.compare))

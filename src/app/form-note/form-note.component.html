@@ -47,8 +47,22 @@
     </div>
     <div class="col-lg-6">
       <div class="form-group">
-        <label for="title">Description</label>
-        <textarea class="form-control" id="description" rows="5" placeholder="Entrez une description" formControlName="description"></textarea>
+        <div class="row">
+          <label for="title">Description</label>
+          <textarea class="form-control" id="description" rows="3" placeholder="Entrez une description" formControlName="description"></textarea>
+        </div>
+        <div class="row">
+          <div class="col-lg-4">
+            <label class="form-check-label">
+              Catégorie
+            </label>
+          </div>
+          <div class="col-lg-4">
+            <select class="form-control" id="categorie" formControlName="categorie">
+              <option *ngFor="let cat of categories" [ngValue]="cat">{{cat.nom}}</option>
+            </select>
+          </div>
+        </div>
       </div>
     </div>
   </div>

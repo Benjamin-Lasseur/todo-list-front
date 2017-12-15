@@ -22,13 +22,28 @@ export class NoteServiceService {
         })
         this.notesSubject.next(this.notesTab)
       })
+      this.http.get<Note[]>(`${environment.url}/notes/all`)
+      .subscribe(notes => {
+        notes.forEach(note => {
+          this.notesAllTab.push(this.dateUtil.convertDateStringToJSON(note, ["dateFin", "dateDebut"]))
+        })
+        this.notesAllSubject.next(this.notesAllTab)
+      })
+      
   }
 
   notesSubject: Subject<Note[]> = new Subject()
   notesTab: Note[] = []
 
+  notesAllSubject: Subject<Note[]> = new Subject()
+  notesAllTab: Note[] = []
+
   listerNotesNonDone(): Observable<Note[]> {
     return this.notesSubject.asObservable()
+  }
+
+  listerNotesAll(): Observable<Note[]> {
+    return this.notesAllSubject.asObservable()
   }
 
   enregistrer(note: Note): void {
@@ -47,6 +62,10 @@ export class NoteServiceService {
       })
       this.notesSubject.next(this.notesTab)
     })
+  }
+
+  allNotes(note: Note): void {
+    
   }
 
 }

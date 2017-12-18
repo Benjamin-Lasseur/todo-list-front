@@ -1,8 +1,0 @@
-<ul class="list-group">
-  <li *ngFor="let note of notesNonDonetab" [class]="applyCategorieStyle(note.categorie.id)">{{note.title}}
-    <span class="badge badge-success" (click)="done(note)">
-      <span class="glyphicon glyphicon-ok"></span>
-    </span>
-    <span class="badge badge-default badge-pill">{{joursRestants(note.dateFin)}}</span>
-  </li>
-</ul>

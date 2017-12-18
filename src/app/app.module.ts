@@ -4,11 +4,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import DateUtil from './shared/util/date-util'
-
-
-
-
-
 import { AppComponent } from './app.component';
 import { FormNoteComponent } from './form-note/form-note.component';
 import { NoteServiceService } from './shared/service/note-service.service';
